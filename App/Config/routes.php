@@ -6,4 +6,4 @@ use App\Router\Route;
 
 Route::get('files', null, 'all');
 //Route::get('home', null, 'home');
-//Route::post('files', null, 'all', 'FilesController');
+Route::post('files', null, 'save');

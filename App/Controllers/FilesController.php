@@ -16,7 +16,15 @@ class FilesController extends Controller
 
     public function all(...$params): array|string
     {
-        return 'all';
+        return print_r($this->file->getAll());
+    }
+
+    public function save(...$params): array|string
+    {
+        /** @var $name */
+        extract($params);
+        //$this->file->save($name);
+        return $name;
     }
 
 

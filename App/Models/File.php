@@ -14,16 +14,26 @@ class File extends Model implements Repository
         $this->database = self::$db;
     }
 
-    public function save(string $fileName)
+    public function save(string $fileName): bool
     {
-        $sql = "insert into files ('name') values (:fileName)";
+        $sql = "insert into files (
+                   'name',
+                   'directory',
+                   'stored_at'
+                   )
+                    values (
+                    :fileName,
+                    :directory,
+                    NOW()       
+                   )";
         $result = $this->database->pdo->prepare($sql);
         $result->bindParam(':fileName', $fileName);
+        $result->bindParam(':directory', $fileName);
         $result->execute();
-        return true;
+        //return true;
     }
 
-    public function getAll()
+    public function getAll(): array
     {
         $sql = "select * from files";
         $result = $this->database->pdo->prepare($sql);
@@ -41,7 +51,7 @@ class File extends Model implements Repository
         return $result->fetch(Database::FETCH_ASSOC);
     }
 
-    public function findByName(string $name)
+    public function findByName(string $name): array
     {
         $sql = "select * from files where name=:name";
         $result = $this->database->pdo->prepare($sql);
