@@ -5,7 +5,7 @@ namespace App\Controllers;
 use App\models\File;
 
 
-class FileController extends Controller
+class FilesController extends Controller
 {
     private File $file;
 

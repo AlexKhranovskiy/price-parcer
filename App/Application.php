@@ -30,9 +30,7 @@ class Application
                 $router->controller
             );
         } catch (\Exception $exception) {
-            $this->controllerActionResult =
-                (new Home())->error([$exception->getMessage()], '/home', 'Home')
-            ->render();
+
         }
     }
 }
