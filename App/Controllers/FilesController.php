@@ -13,14 +13,13 @@ class FilesController extends Controller
 
     public function __construct()
     {
-        $this->file  = new File();
-        $this->fileResource = new FileResource();
+        $this->file  = new File;
+        $this->fileResource = new FileResource;
     }
 
     public function all(...$params): array|string
     {
-        //exit(var_dump($this->file->getAll()));
-        $this->fileResource->set($this->file->getAll());
+        call_user_func_array($this->fileResource, [$this->file->getAll()]);
         return $this->fileResource->response();
     }
 

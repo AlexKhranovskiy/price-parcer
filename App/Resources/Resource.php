@@ -15,13 +15,10 @@ abstract class Resource
         500 => 'Internal Server Error',
     ];
     protected int $code;
-
     public int|null $id = null;
     public string|null $name = null;
     public string|null $directory = null;
     public string|null $stored_at = null;
-    //public $link;
-
 
     public function set(array|bool $data)
     {
@@ -52,4 +49,6 @@ abstract class Resource
         header('Content-Type: application/json; charset=utf-8');
         return json_encode($data);
     }
+
+    //abstract public function __invoke(array $data);
 }
