@@ -20,7 +20,7 @@ abstract class Resource
     public string|null $directory = null;
     public string|null $stored_at = null;
 
-    public function set(array|bool $data)
+    public function set(array|bool $data, ?int $code = null)
     {
         if(is_array($data)) {
             /** @var $id */
