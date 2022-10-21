@@ -23,8 +23,7 @@ class FilesController extends Controller
     {
         /** @var $name */
         extract($params);
-        //$this->file->save($name);
-        return $name;
+        return $this->file->save($name);
     }
 
 

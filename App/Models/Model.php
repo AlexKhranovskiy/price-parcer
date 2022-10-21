@@ -4,11 +4,22 @@ namespace App\Models;
 
 use App\Database\Database;
 
-abstract class Model
+class Model
 {
-    public static Database $db;
-    public static function run(Database $database)
+    private static Database $_db;
+    private static string $_storage;
+    protected Database $db;
+    protected string $storage;
+
+    public static function set(Database $db, string $storage)
     {
-        self::$db = $database;
+        self::$_db = $db;
+        self::$_storage = $storage;
+    }
+
+    protected function __construct()
+    {
+        $this->storage = self::$_storage;
+        $this->db = self::$_db;
     }
 }

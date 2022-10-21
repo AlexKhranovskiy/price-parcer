@@ -7,36 +7,30 @@ use App\Interfaces\Repository;
 
 class File extends Model implements Repository
 {
-    private Database $database;
-
     public function __construct()
     {
-        $this->database = self::$db;
+        parent::__construct();
     }
 
     public function save(string $fileName): bool
     {
-        $sql = "insert into files (
-                   'name',
-                   'directory',
-                   'stored_at'
-                   )
-                    values (
+        $sql = "insert into files (name, directory, stored_at) values (
                     :fileName,
                     :directory,
                     NOW()       
                    )";
-        $result = $this->database->pdo->prepare($sql);
+        $result = $this->db->pdo->prepare($sql);
         $result->bindParam(':fileName', $fileName);
-        $result->bindParam(':directory', $fileName);
+        $storage = $this->storage . $fileName;
+        $result->bindParam(':directory', $storage);
         $result->execute();
-        //return true;
+        return true;
     }
 
     public function getAll(): array
     {
         $sql = "select * from files";
-        $result = $this->database->pdo->prepare($sql);
+        $result = $this->db->pdo->prepare($sql);
         $result->execute();
         return $result->fetchAll(Database::FETCH_ASSOC);
     }
@@ -44,7 +38,7 @@ class File extends Model implements Repository
     public function findById(int $id)
     {
         $sql = "select * from files where id=:id";
-        $result = $this->database->pdo->prepare($sql);
+        $result = $this->db->pdo->prepare($sql);
         $result->execute([
             'id' => $id
         ]);
@@ -54,7 +48,7 @@ class File extends Model implements Repository
     public function findByName(string $name): array
     {
         $sql = "select * from files where name=:name";
-        $result = $this->database->pdo->prepare($sql);
+        $result = $this->db->pdo->prepare($sql);
         $result->execute([
             'name' => $name
         ]);
