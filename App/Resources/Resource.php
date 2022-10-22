@@ -15,23 +15,12 @@ abstract class Resource
         500 => 'Internal Server Error',
     ];
     protected int $code;
-    public int|null $id = null;
-    public string|null $name = null;
-    public string|null $directory = null;
-    public string|null $stored_at = null;
+    protected array|bool|null $data;
 
     public function set(array|bool $data, ?int $code = null)
     {
+        $this->data = $data;
         if(is_array($data)) {
-            /** @var $id */
-            /** @var $name */
-            /** @var $directory */
-            /** @var $stored_at */
-            extract($data[0]);
-            $this->id = $id;
-            $this->name = $name;
-            $this->directory = $directory;
-            $this->stored_at = $stored_at;
             $this->code = 200;
         }
         if(is_bool($data)) {
@@ -44,10 +33,17 @@ abstract class Resource
 
     public function response()
     {
-        $data = new \ArrayObject($this);
+        if(is_array($this->data)) {
+            $additions = new \ArrayObject($this);
+            foreach ($this->data as &$item) {
+                foreach ($additions as $key => $addition) {
+                    $item[$key] = $addition;
+                }
+            }
+        }
         header("HTTP/1.1 " . $this->code . ' ' . $this->statuses[$this->code]);
         header('Content-Type: application/json; charset=utf-8');
-        return json_encode($data);
+        return json_encode($this->data);
     }
 
     //abstract public function __invoke(array $data);
