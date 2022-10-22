@@ -7,8 +7,8 @@ require_once (__DIR__ . '/App/Config/storage.php');
 use App\Application;
 
 /** @var $connection */
-/** @var $storage */
+///** @var $storage */
 
-$obj = new Application($connection, $storage, $_SERVER['REQUEST_URI']);
+$obj = new Application($connection, $GLOBALS['storage'], $_SERVER['REQUEST_URI']);
 
 echo $obj->controllerActionResult;

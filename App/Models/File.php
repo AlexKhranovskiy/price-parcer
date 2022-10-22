@@ -21,7 +21,7 @@ class File extends Model implements Repository
                    )";
         $result = $this->db->pdo->prepare($sql);
         $result->bindParam(':fileName', $fileName);
-        $storage = $this->storage . $fileName;
+        $storage = $_SERVER['DOCUMENT_ROOT'] . $this->storage . '/' . base64_encode(time() . $fileName);
         $result->bindParam(':directory', $storage);
         $result->execute();
         return true;

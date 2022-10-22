@@ -6,7 +6,7 @@ namespace App\Resources;
 
 abstract class Resource
 {
-    private array $statuses = [
+    protected array $statuses = [
         200 => 'OK',
         201 => 'Created',
         204 => 'No Content',
@@ -15,6 +15,12 @@ abstract class Resource
         500 => 'Internal Server Error',
     ];
     protected int $code;
+
+    public int $id = 0;
+    public string $name = '';
+    public string $directory = '';
+    public string $stored_at = '';
+
     protected array|bool|null $data;
 
     public function set(array|bool $data, ?int $code = null)
@@ -31,20 +37,8 @@ abstract class Resource
         }
     }
 
-    public function response()
-    {
-        if(is_array($this->data)) {
-            $additions = new \ArrayObject($this);
-            foreach ($this->data as &$item) {
-                foreach ($additions as $key => $addition) {
-                    $item[$key] = $addition;
-                }
-            }
-        }
-        header("HTTP/1.1 " . $this->code . ' ' . $this->statuses[$this->code]);
-        header('Content-Type: application/json; charset=utf-8');
-        return json_encode($this->data);
-    }
+    abstract public function response();
+
 
     //abstract public function __invoke(array $data);
 }

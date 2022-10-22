@@ -27,7 +27,8 @@ class FilesController extends Controller
     {
         /** @var $name */
         extract($params);
-        return $this->file->save($name);
+        call_user_func_array($this->fileResource, [$this->file->save($name)]);
+        return $this->fileResource->response();
     }
 
 

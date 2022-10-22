@@ -2,4 +2,4 @@
 
 namespace App\Config;
 
-$storage = __DIR__ . '/';
+$GLOBALS['storage'] = '/Files';
