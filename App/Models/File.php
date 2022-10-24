@@ -54,4 +54,12 @@ class File extends Model implements Repository
         ]);
         return $result->fetchAll(Database::FETCH_ASSOC);
     }
+
+    public function getLastId()
+    {
+        $sql = "SELECT id FROM files ORDER BY id DESC LIMIT 1";
+        $result = $this->db->pdo->prepare($sql);
+        $result->execute();
+        return $result->fetch(Database::FETCH_ASSOC);
+    }
 }

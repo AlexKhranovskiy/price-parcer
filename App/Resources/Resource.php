@@ -38,7 +38,4 @@ abstract class Resource
     }
 
     abstract public function response();
-
-
-    //abstract public function __invoke(array $data);
 }

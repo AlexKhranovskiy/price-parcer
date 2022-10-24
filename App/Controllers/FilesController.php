@@ -4,17 +4,20 @@ namespace App\Controllers;
 
 use App\models\File;
 use App\Resources\FileResource;
+use App\Services\FileManager;
 
 
 class FilesController extends Controller
 {
     private File $file;
     private FileResource $fileResource;
+    private FileManager $fileManager;
 
     public function __construct()
     {
         $this->file = new File;
         $this->fileResource = new FileResource;
+        $this->fileManager = new FileManager($_FILES, $this->file);
     }
 
     public function all(...$params): array|string
@@ -25,15 +28,10 @@ class FilesController extends Controller
 
     public function save(...$params): array|string
     {
-        $fileName = $_FILES['file_image']['name'];
-        $error = $_FILES['file_image']['error'];
-        if ($error == UPLOAD_ERR_OK) {
-            move_uploaded_file(
-                $_FILES['file_image']['tmp_name'],
-                $_SERVER['DOCUMENT_ROOT'] . $GLOBALS['storage'] . '/' . $fileName
-            );
-        }
-        call_user_func_array($this->fileResource, [$this->file->save($fileName)]);
+        $this->fileManager->save();
+        call_user_func_array($this->fileResource, [
+            $this->file->save($this->fileManager->codeName())
+        ]);
         return $this->fileResource->response();
     }
 
