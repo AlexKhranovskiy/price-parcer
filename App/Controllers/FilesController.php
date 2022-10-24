@@ -13,7 +13,7 @@ class FilesController extends Controller
 
     public function __construct()
     {
-        $this->file  = new File;
+        $this->file = new File;
         $this->fileResource = new FileResource;
     }
 
@@ -25,9 +25,15 @@ class FilesController extends Controller
 
     public function save(...$params): array|string
     {
-        /** @var $name */
-        extract($params);
-        call_user_func_array($this->fileResource, [$this->file->save($name)]);
+        $fileName = $_FILES['file_image']['name'];
+        $error = $_FILES['file_image']['error'];
+        if ($error == UPLOAD_ERR_OK) {
+            move_uploaded_file(
+                $_FILES['file_image']['tmp_name'],
+                $_SERVER['DOCUMENT_ROOT'] . $GLOBALS['storage'] . '/' . $fileName
+            );
+        }
+        call_user_func_array($this->fileResource, [$this->file->save($fileName)]);
         return $this->fileResource->response();
     }
 

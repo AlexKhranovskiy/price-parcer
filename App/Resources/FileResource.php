@@ -16,22 +16,23 @@ class FileResource extends Resource
 
     public function response()
     {
-        $template = new \ArrayObject($this);
-        foreach ($this->data as &$item) {
-            foreach ($template as $k => $tmp){
-                if(isset($item[$k])){
-                    if(is_int($item[$k])) {
-                        $item[$k] += $tmp;
+        if(is_array($this->data)) {
+            $template = new \ArrayObject($this);
+            foreach ($this->data as &$item) {
+                foreach ($template as $k => $tmp) {
+                    if (isset($item[$k])) {
+                        if (is_int($item[$k])) {
+                            $item[$k] += $tmp;
+                        }
+                        if (is_string($item[$k])) {
+                            $item[$k] .= $tmp;
+                        }
+                    } else {
+                        $item[$k] = $tmp;
                     }
-                    if(is_string($item[$k])) {
-                        $item[$k] .= $tmp;
-                    }
-                } else {
-                    $item[$k] = $tmp;
                 }
             }
         }
-
         header("HTTP/1.1 " . $this->code . ' ' . $this->statuses[$this->code]);
         header('Content-Type: application/json; charset=utf-8');
         return json_encode($this->data);
