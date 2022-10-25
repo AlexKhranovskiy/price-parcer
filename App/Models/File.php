@@ -21,7 +21,8 @@ class File extends Model implements Repository
                    )";
         $result = $this->db->pdo->prepare($sql);
         $result->bindParam(':fileName', $fileName);
-        $storage = $_SERVER['DOCUMENT_ROOT'] . $GLOBALS['storage'] . '/' . base64_encode(time() . $fileName);
+        $storage = $_SERVER['DOCUMENT_ROOT'] . $GLOBALS['storage'] . '/' .
+            $this->getLastId(). '-' . $fileName;
         $result->bindParam(':directory', $storage);
         $result->execute();
         return true;
@@ -60,6 +61,6 @@ class File extends Model implements Repository
         $sql = "SELECT id FROM files ORDER BY id DESC LIMIT 1";
         $result = $this->db->pdo->prepare($sql);
         $result->execute();
-        return $result->fetch(Database::FETCH_ASSOC);
+        return current($result->fetch(Database::FETCH_ASSOC));
     }
 }

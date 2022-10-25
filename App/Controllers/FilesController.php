@@ -30,7 +30,7 @@ class FilesController extends Controller
     {
         $this->fileManager->save();
         call_user_func_array($this->fileResource, [
-            $this->file->save($this->fileManager->codeName())
+            $this->file->save($this->fileManager->getFileName())
         ]);
         return $this->fileResource->response();
     }

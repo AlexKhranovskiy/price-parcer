@@ -17,3 +17,6 @@
 ```
 * Open in browser http://localhost/auth
 
+curl -X POST -H "Content-Type: multipart/form-data" -H "Accept: application/json" -F "file_image=@1.jpg" http://localhost:80/api/files
+
+
