@@ -30,10 +30,17 @@ class FilesController extends Controller
     {
         $this->fileManager->save();
         call_user_func_array($this->fileResource, [
-            $this->file->save($this->fileManager->getFileName())
+            $this->file->save($this->fileManager->getName())
         ]);
         return $this->fileResource->response();
     }
 
+    public function delete(...$params)
+    {
+        /** @var $id */
+        extract($params);
+        $this->fileManager->deleteById($id);
+        return true;
+    }
 
 }

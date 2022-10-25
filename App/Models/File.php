@@ -22,7 +22,7 @@ class File extends Model implements Repository
         $result = $this->db->pdo->prepare($sql);
         $result->bindParam(':fileName', $fileName);
         $storage = $_SERVER['DOCUMENT_ROOT'] . $GLOBALS['storage'] . '/' .
-            $this->getLastId(). '-' . $fileName;
+            $this->getLastId() + 1 . '-' . $fileName;
         $result->bindParam(':directory', $storage);
         $result->execute();
         return true;
@@ -62,5 +62,15 @@ class File extends Model implements Repository
         $result = $this->db->pdo->prepare($sql);
         $result->execute();
         return current($result->fetch(Database::FETCH_ASSOC));
+    }
+
+    public function deleteById(int $id)
+    {
+        $sql = "delete from files where id=:id";
+        $result = $this->db->pdo->prepare($sql);
+        $result->execute([
+            'id' => $id
+        ]);
+        return null;
     }
 }

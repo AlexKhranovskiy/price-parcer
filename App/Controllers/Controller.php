@@ -16,7 +16,8 @@ abstract class Controller
         string|null $action,
         array $queryParams,
         string|null $controller,
-    ): array|string|null {
+    ): array|string|null
+    {
         if (!is_null($controller)) {
             $controllerName = $controller;
         } else {
@@ -25,7 +26,10 @@ abstract class Controller
         $controllerClass = __NAMESPACE__ . '\\' . ucfirst($controllerName);
         if (class_exists($controllerClass)) {
             $controller = new $controllerClass();
-            $params = (is_null($id) && !empty($queryParams)) ? $queryParams : [$id, $queryParams];
+            $params = (is_null($id) && !empty($queryParams)) ? $queryParams : [
+                'id' => $id,
+                'queryParams' => $queryParams
+            ];
             return call_user_func_array([$controller, $action], $params);
         } else {
             throw new \Exception('Not found', 404);

@@ -9,17 +9,17 @@ use App\models\File;
 class FileManager
 {
     private array $Files;
-    private mixed $lastId;
+    private File $file;
 
     public function __construct(array $FILES, File $file)
     {
         $this->Files = $FILES;
-        $this->lastId = $file->getLastId();
+        $this->file = $file;
     }
 
     public function save()
     {
-        $fileName = $this->getCodeName();
+        $fileName = $this->encodeName();
 
         $error = $this->Files['file_image']['error'];
         if ($error == UPLOAD_ERR_OK) {
@@ -29,14 +29,20 @@ class FileManager
         }
     }
 
-    public function getCodeName(): string
+    public function encodeName(): string
     {
         return $_SERVER['DOCUMENT_ROOT'] . $GLOBALS['storage'] . '/' .
-            $this->lastId++ . '-' . $this->Files['file_image']['name'];
+            $this->file->getLastId() + 1 . '-' . $this->Files['file_image']['name'];
     }
 
-    public function getFileName()
+    public function getName()
     {
         return $this->Files['file_image']['name'];
+    }
+
+    public function deleteById(int $id)
+    {
+        $fileName = $this->file->findById($id)['directory'];
+        unlink($fileName);
     }
 }
