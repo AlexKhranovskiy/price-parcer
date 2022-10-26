@@ -6,16 +6,18 @@ use App\Database\Database;
 use App\Interfaces\Repository;
 use App\Services\FileManager;
 
-class File extends Model implements Repository
+class File implements Repository
 {
-    private $fileManager;
+    protected Database $db;
+    protected string $storage;
+    public FileManager $fileManager;
 
-    public function __construct(FileManager $fileManager)
+    public function __construct(Database $db, string $storage, FileManager $fileManager)
     {
-        parent::__construct();
+        $this->storage = $storage;
+        $this->db = $db;
         $this->fileManager = $fileManager;
     }
-
     public function save(string $fileName): bool
     {
         $sql = "insert into files (name, directory, stored_at) values (
@@ -58,14 +60,6 @@ class File extends Model implements Repository
             'name' => $name
         ]);
         return $result->fetchAll(Database::FETCH_ASSOC);
-    }
-
-    public function getLastId()
-    {
-        $sql = "show table status;";
-        $result = $this->db->pdo->prepare($sql);
-        $result->execute();
-        return $result->fetch(Database::FETCH_ASSOC)['Auto_increment'];
     }
 
     public function deleteById(int $id)

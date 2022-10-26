@@ -2,8 +2,7 @@
 
 namespace App\Controllers;
 
-use App\Models\Model;
-use App\Views\Responser;
+use App\models\File;
 
 abstract class Controller
 {
@@ -16,6 +15,7 @@ abstract class Controller
         string|null $action,
         array $queryParams,
         string|null $controller,
+        File $file
     ): array|string|null
     {
         if (!is_null($controller)) {
@@ -25,7 +25,7 @@ abstract class Controller
         }
         $controllerClass = __NAMESPACE__ . '\\' . ucfirst($controllerName);
         if (class_exists($controllerClass)) {
-            $controller = new $controllerClass();
+            $controller = new $controllerClass($file);
             $params = (is_null($id) && !empty($queryParams)) ? $queryParams : [
                 'id' => $id,
                 'queryParams' => $queryParams
