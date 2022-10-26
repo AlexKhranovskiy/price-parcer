@@ -4,12 +4,16 @@ namespace App\models;
 
 use App\Database\Database;
 use App\Interfaces\Repository;
+use App\Services\FileManager;
 
 class File extends Model implements Repository
 {
-    public function __construct()
+    private $fileManager;
+
+    public function __construct(FileManager $fileManager)
     {
         parent::__construct();
+        $this->fileManager = $fileManager;
     }
 
     public function save(string $fileName): bool
@@ -22,7 +26,7 @@ class File extends Model implements Repository
         $result = $this->db->pdo->prepare($sql);
         $result->bindParam(':fileName', $fileName);
         $storage = $_SERVER['DOCUMENT_ROOT'] . $GLOBALS['storage'] . '/' .
-            $this->getLastId() + 1 . '-' . $fileName;
+            $this->fileManager->encodedName;
         $result->bindParam(':directory', $storage);
         $result->execute();
         return true;
@@ -58,10 +62,10 @@ class File extends Model implements Repository
 
     public function getLastId()
     {
-        $sql = "SELECT id FROM files ORDER BY id DESC LIMIT 1";
+        $sql = "show table status;";
         $result = $this->db->pdo->prepare($sql);
         $result->execute();
-        return current($result->fetch(Database::FETCH_ASSOC));
+        return $result->fetch(Database::FETCH_ASSOC)['Auto_increment'];
     }
 
     public function deleteById(int $id)

@@ -15,9 +15,10 @@ class FilesController extends Controller
 
     public function __construct()
     {
-        $this->file = new File;
+
         $this->fileResource = new FileResource;
-        $this->fileManager = new FileManager($_FILES, $this->file);
+        $this->fileManager = new FileManager($_FILES);
+        $this->file = new File($this->fileManager);
     }
 
     public function all(...$params): array|string
@@ -39,7 +40,9 @@ class FilesController extends Controller
     {
         /** @var $id */
         extract($params);
-        $this->fileManager->deleteById($id);
+        $fileName = $this->file->findById($id)['directory'];
+        $this->fileManager->delete($fileName);
+        $this->file->deleteById($id);
         return true;
     }
 
