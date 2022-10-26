@@ -11,19 +11,16 @@ class FilesController extends Controller
 {
     private File $file;
     private FileResource $fileResource;
-    //private FileManager $fileManager;
 
     public function __construct(File $file)
     {
-
         $this->fileResource = new FileResource;
-        //$this->fileManager = new FileManager($_FILES);
         $this->file = $file;
     }
 
     public function all(...$params): array|string
     {
-        call_user_func_array($this->fileResource, [$this->file->getAll()]);
+        call_user_func_array($this->fileResource, [$this->file->getAll(), 200]);
         return $this->fileResource->response();
     }
 
@@ -31,7 +28,7 @@ class FilesController extends Controller
     {
         $this->file->fileManager->save();
         call_user_func_array($this->fileResource, [
-            $this->file->save($this->file->fileManager->getName())
+            $this->file->save($this->file->fileManager->getName()), 201
         ]);
         return $this->fileResource->response();
     }
@@ -43,7 +40,10 @@ class FilesController extends Controller
         $fileName = $this->file->findById($id)['directory'];
         $this->file->fileManager->delete($fileName);
         $this->file->deleteById($id);
-        return true;
+        call_user_func_array($this->fileResource, [
+            $this->file->deleteById($id), 201
+        ]);
+        return $this->fileResource->response();
     }
 
 }

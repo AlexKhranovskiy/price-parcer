@@ -21,20 +21,12 @@ abstract class Resource
     public string $directory = '';
     public string $stored_at = '';
 
-    protected array|bool|null $data;
+    protected array|null $data;
 
-    public function set(array|bool $data, ?int $code = null)
+    public function set(array|null$data, int $code)
     {
         $this->data = $data;
-        if(is_array($data)) {
-            $this->code = 200;
-        }
-        if(is_bool($data)) {
-            $this->code = 201;
-        }
-        if(is_null($data)){
-            $this->code = 204;
-        }
+        $this->code = $code;
     }
 
     abstract public function response();

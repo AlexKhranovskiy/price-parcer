@@ -8,9 +8,9 @@ class FileResource extends Resource
 {
     public string $link = '';
 
-    public function __invoke(array|bool|null $data)
+    public function __invoke(array|null $data, int $code)
     {
-        $this->set($data);
+        $this->set($data, $code);
         $this->link = 'http://' . $_SERVER['HTTP_HOST'] . $GLOBALS['storage'] . $this->name;
     }
 

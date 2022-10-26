@@ -18,7 +18,7 @@ class File implements Repository
         $this->db = $db;
         $this->fileManager = $fileManager;
     }
-    public function save(string $fileName): bool
+    public function save(string $fileName)
     {
         $sql = "insert into files (name, directory, stored_at) values (
                     :fileName,
@@ -31,7 +31,7 @@ class File implements Repository
             $this->fileManager->encodedName;
         $result->bindParam(':directory', $storage);
         $result->execute();
-        return true;
+        return null;
     }
 
     public function getAll(): array
