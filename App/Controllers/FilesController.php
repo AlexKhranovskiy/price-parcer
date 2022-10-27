@@ -20,16 +20,23 @@ class FilesController extends Controller
 
     public function all(...$params): array|string
     {
-        call_user_func_array($this->fileResource, [$this->file->getAll(), 200]);
+        $this->fileResource->set($this->file->getAll(), 200);
         return $this->fileResource->response();
     }
 
     public function save(...$params): array|string
     {
+/*        $func = function($name, &$item)
+        {
+            $directory = explode('/', $item['directory']);
+            $item[$name] = $_SERVER['HTTP_HOST'] . $GLOBALS['storage'] . '/' .
+                end($directory);
+        };*/
+
         $this->file->fileManager->save();
-        call_user_func_array($this->fileResource, [
+        $this->fileResource->set(
             $this->file->save($this->file->fileManager->getName()), 201
-        ]);
+        );
         return $this->fileResource->response();
     }
 
@@ -40,9 +47,9 @@ class FilesController extends Controller
         $fileName = $this->file->findById($id)['directory'];
         $this->file->fileManager->delete($fileName);
         $this->file->deleteById($id);
-        call_user_func_array($this->fileResource, [
+        $this->fileResource->set(
             $this->file->deleteById($id), 201
-        ]);
+        );
         return $this->fileResource->response();
     }
 
