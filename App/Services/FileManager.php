@@ -9,7 +9,7 @@ use App\models\File;
 class FileManager
 {
     private array $Files;
-    public $encodedName;
+    public string $encodedName;
 
     public function __construct(array $FILES)
     {

@@ -3,9 +3,7 @@
 namespace App\Controllers;
 
 use App\models\File;
-use App\Resources\FileResource;
 use App\Resources\FileResourceWithLink;
-use App\Services\FileManager;
 
 
 class FilesController extends Controller
