@@ -4,47 +4,34 @@ namespace App\Controllers;
 
 use App\models\File;
 use App\Resources\FileResource;
+use App\Resources\FileResourceWithLink;
 use App\Services\FileManager;
 
 
 class FilesController extends Controller
 {
     private File $file;
-    private FileResource $fileResource;
+    private FileResourceWithLink $fileResourceWithLink;
 
     public function __construct(File $file)
     {
-        $this->fileResource = new FileResource;
+        $this->fileResourceWithLink = new FileResourceWithLink;
         $this->file = $file;
     }
 
     public function all(...$params): array|string
     {
-        $additions = function($name, &$item)
-        {
-            $directory = explode('/', $item['directory']);
-            $item[$name] = $_SERVER['HTTP_HOST'] . $GLOBALS['storage'] . '/' .
-                end($directory);
-        };
-
-        $this->fileResource->set($this->file->getAll(), 200, $additions);
-        return $this->fileResource->response();
+        $this->fileResourceWithLink->set($this->file->getAll(), 200);
+        return $this->fileResourceWithLink->response();
     }
 
     public function save(...$params): array|string
     {
-/*        $func = function($name, &$item)
-        {
-            $directory = explode('/', $item['directory']);
-            $item[$name] = $_SERVER['HTTP_HOST'] . $GLOBALS['storage'] . '/' .
-                end($directory);
-        };*/
-
         $this->file->fileManager->save();
-        $this->fileResource->set(
+        $this->fileResourceWithLink->set(
             $this->file->save($this->file->fileManager->getName()), 201
         );
-        return $this->fileResource->response();
+        return $this->fileResourceWithLink->response();
     }
 
     public function delete(...$params)
@@ -54,10 +41,10 @@ class FilesController extends Controller
         $fileName = $this->file->findById($id)['directory'];
         $this->file->fileManager->delete($fileName);
         $this->file->deleteById($id);
-        $this->fileResource->set(
+        $this->fileResourceWithLink->set(
             $this->file->deleteById($id), 201
         );
-        return $this->fileResource->response();
+        return $this->fileResourceWithLink->response();
     }
 
 }
