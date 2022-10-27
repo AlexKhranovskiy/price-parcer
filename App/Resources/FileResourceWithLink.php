@@ -4,9 +4,7 @@
 namespace App\Resources;
 
 
-use App\Interfaces\AdditionsForFileResource;
-
-class FileResourceWithLink extends FileResource implements AdditionsForFileResource
+class FileResourceWithLink extends FileResource
 {
     public string $link = '';
 

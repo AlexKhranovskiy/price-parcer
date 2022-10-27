@@ -5,6 +5,7 @@ namespace App\Resources;
 
 
 use App\Interfaces\AdditionsForFileResource;
+use ArrayObject;
 
 class FileResource implements AdditionsForFileResource
 {
@@ -19,7 +20,7 @@ class FileResource implements AdditionsForFileResource
 
     protected array|null $data;
     protected int $code;
-    protected $template;
+    protected ArrayObject $template;
 
     public int $id = 0;
     public string $name = '';
@@ -30,7 +31,7 @@ class FileResource implements AdditionsForFileResource
     {
         $this->data = $data;
         $this->code = $code;
-        $this->template = new \ArrayObject($this);
+        $this->template = new ArrayObject($this);
 
         if (is_array($this->data)) {
             foreach ($this->data as &$item) {
@@ -51,7 +52,7 @@ class FileResource implements AdditionsForFileResource
         }
     }
 
-    public function response()
+    public function response(): bool|string
     {
         header("HTTP/1.1 " . $this->code . ' ' . $this->statuses[$this->code]);
         header('Content-Type: application/json; charset=utf-8');
@@ -60,8 +61,6 @@ class FileResource implements AdditionsForFileResource
 
     public function additions(string $fieldName, array &$value)
     {
-//        $directory = explode('/', $value['directory']);
-//        $value[$fieldName] = $_SERVER['HTTP_HOST'] . $GLOBALS['storage'] . '/' .
-//            end($directory);
+        //Empty because this class has no additional fields to output
     }
 }
