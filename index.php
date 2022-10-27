@@ -5,10 +5,16 @@ require_once (__DIR__ . '/App/Config/routes.php');
 require_once (__DIR__ . '/App/Config/storage.php');
 
 use App\Application;
+use App\Resources\Resource;
 
 /** @var $connection */
 ///** @var $storage */
 
-$obj = new Application($connection, $GLOBALS['storage'], $_SERVER['REQUEST_URI']);
-
-echo $obj->controllerActionResult;
+try {
+    $obj = new Application($connection, $GLOBALS['storage'], $_SERVER['REQUEST_URI']);
+    echo $obj->controllerActionResult;
+} catch (\Exception $exception) {
+    $resource = new Resource;
+    $resource->set([$exception->getMessage()], 404);
+    echo $resource->response();
+}
