@@ -20,7 +20,14 @@ class FilesController extends Controller
 
     public function all(...$params): array|string
     {
-        $this->fileResource->set($this->file->getAll(), 200);
+        $additions = function($name, &$item)
+        {
+            $directory = explode('/', $item['directory']);
+            $item[$name] = $_SERVER['HTTP_HOST'] . $GLOBALS['storage'] . '/' .
+                end($directory);
+        };
+
+        $this->fileResource->set($this->file->getAll(), 200, $additions);
         return $this->fileResource->response();
     }
 

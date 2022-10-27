@@ -29,14 +29,15 @@ class FileResource
 
     public array $result;
 
-    public function set(array|null $data, int $code)
+    public function set(array|null $data, int $code, ?callable $additions = null)
     {
         $this->data = $data;
         $this->code = $code;
         $this->template = new \ArrayObject($this);
 
-        $this->result = array_map(function($item){
-            foreach ($this->template as $k => $tmp) {
+        if (is_array($this->data)) {
+            foreach ($this->data as &$item) {
+                foreach ($this->template as $k => $tmp) {
                     if (isset($item[$k])) {
                         if (is_int($item[$k])) {
                             $item[$k] += $tmp;
@@ -46,11 +47,11 @@ class FileResource
                         }
                     } else {
                         $item[$k] = $tmp;
-                        $this->additions('link', $item);
+                        call_user_func_array($additions, ['link', &$item]);
                     }
                 }
-            return $item;
-        },$this->data);
+            }
+        }
     }
 
     public function additions($name, &$item)
@@ -100,6 +101,6 @@ class FileResource
 
         header("HTTP/1.1 " . $this->code . ' ' . $this->statuses[$this->code]);
         header('Content-Type: application/json; charset=utf-8');
-        return json_encode($this->result);
+        return json_encode($this->data);
     }
 }
