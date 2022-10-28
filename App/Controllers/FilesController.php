@@ -59,7 +59,7 @@ class FilesController extends Controller
                     ' and ' . $eCantDeleteFromDB->getMessage(), 500);
             }
             throw new \Exception($eFileNotFound->getMessage() .
-                ', record was deleted.', $eFileNotFound->getCode());
+                ', record was successfully deleted.', $eFileNotFound->getCode());
         }
     }
 
