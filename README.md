@@ -5,7 +5,8 @@ Praction with REST API and file storing on server side using PHP. Praction with 
 #### Description
 Application uses Repository design pattern. Application has REST API, receives file with using HTTP method POST, 
 encodes file name, stores in folder 'Files', is able to output all stored files' information in JSON format, is 
-able to delete info about file and file themself by inputted id.
+able to delete info about file and file themself by inputted id. All are stored files' names are encoded in uniquals
+names.
 #### How to run
 * Clone the repository 
 * Create file (in root dir of project) .env and copy data from .env.example in it
