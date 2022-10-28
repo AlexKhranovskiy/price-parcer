@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\models\File;
+use App\Resources\FileResource;
 use App\Resources\FileResourceWithLink;
 
 
@@ -40,15 +41,26 @@ class FilesController extends Controller
      */
     public function delete(...$params)
     {
-        /** @var $id */
-        extract($params);
-        $fileName = $this->file->findById($id)['directory'];
-        $this->file->fileManager->delete($fileName);
-        $this->file->deleteById($id);
-        $this->fileResourceWithLink->set(
-            $this->file->deleteById($id), 201
-        );
-        return $this->fileResourceWithLink->response();
+        try {
+            /** @var $id */
+            extract($params);
+            $fileName = $this->file->findById($id)['directory'];
+            $this->file->fileManager->delete($fileName);
+            $this->file->deleteById($id);
+            $this->fileResourceWithLink->set(
+                $this->file->deleteById($id), 201
+            );
+            return $this->fileResourceWithLink->response();
+        } catch (\Exception $eFileNotFound) {
+            try {
+                $this->file->deleteById($id);
+            } catch (\Exception $eCantDeleteFromDB) {
+                throw new \Exception($eFileNotFound->getMessage() .
+                    ' and ' . $eCantDeleteFromDB->getMessage(), 500);
+            }
+            throw new \Exception($eFileNotFound->getMessage() .
+                ', record was deleted.', $eFileNotFound->getCode());
+        }
     }
 
 }
