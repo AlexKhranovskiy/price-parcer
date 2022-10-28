@@ -3,9 +3,9 @@ without the framework
 #### Vocation
 Praction with REST API and file storing on server side using PHP. Praction with MVC, SOLID.
 #### Description
-Application uses Repository design pattern. Application has REST API, receives file with using HTTP method POST,
-is able to output all stored files' information in JSON format, is able to delete info about file and file themself by inputed
-id.
+Application uses Repository design pattern. Application has REST API, receives file with using HTTP method POST, 
+encodes file name, stores in folder 'Files', is able to output all stored files' information in JSON format, is 
+able to delete info about file and file themself by inputted id.
 #### How to run
 * Clone the repository 
 * Create file (in root dir of project) .env and copy data from .env.example in it
@@ -44,6 +44,39 @@ Accept: application/json
 ###
 ```
 Change id to number.
+
+#### Some example
+```http request
+GET http://localhost:80/api/files
+
+HTTP/1.1 200 OK
+Date: Fri, 28 Oct 2022 07:59:28 GMT
+Server: Apache/2.4.52 (Debian)
+X-Powered-By: PHP/8.1.2
+Content-Length: 359
+Keep-Alive: timeout=5, max=100
+Connection: Keep-Alive
+Content-Type: application/json; charset=utf-8
+
+[
+  {
+    "id": 70,
+    "name": "1.jpg",
+    "directory": "\/var\/www\/html\/Files\/1666803133.97451.jpg",
+    "stored_at": "2022-10-26 16:52:13",
+    "link": "http:\/\/localhost:80\/Files\/1666803133.97451.jpg"
+  },
+  {
+    "id": 72,
+    "name": "1.jpg",
+    "directory": "\/var\/www\/html\/Files\/1666885896.96461.jpg",
+    "stored_at": "2022-10-27 15:51:36",
+    "link": "http:\/\/localhost:80\/Files\/1666885896.96461.jpg"
+  }
+]
+
+Response code: 200 (OK); Time: 309ms; Content length: 359 bytes
+```
 
 
 
