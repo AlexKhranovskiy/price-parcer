@@ -8,7 +8,6 @@ use App\Application;
 use App\Resources\Resource;
 
 /** @var $connection */
-///** @var $storage */
 
 try {
     $obj = new Application($connection, $GLOBALS['storage'], $_SERVER['REQUEST_URI']);

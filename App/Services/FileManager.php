@@ -5,6 +5,7 @@ namespace App\Services;
 
 
 use App\models\File;
+use mysql_xdevapi\Exception;
 
 class FileManager
 {
@@ -36,6 +37,10 @@ class FileManager
 
     public function delete(string $fileName)
     {
-        unlink($fileName);
+        try {
+            unlink($fileName);
+        } catch (\Exception $exception){
+            throw new Exception($exception->getMessage());
+        }
     }
 }
