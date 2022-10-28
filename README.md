@@ -78,6 +78,26 @@ Content-Type: application/json; charset=utf-8
 
 Response code: 200 (OK); Time: 309ms; Content length: 359 bytes
 ```
+```http request
+POST http://localhost:80/api/files
+
+HTTP/1.1 500 Internal Server Error
+Date: Fri, 28 Oct 2022 13:41:45 GMT
+Server: Apache/2.4.52 (Debian)
+X-Powered-By: PHP/8.1.2
+Content-Length: 151
+Connection: close
+Content-Type: application/json; charset=utf-8
+
+{
+  "errorno": "E_WARNING",
+  "errstr": "Undefined array key &quot;file_image&quot;",
+  "errfile": "\/var\/www\/html\/App\/Services\/FileManager.php",
+  "errline": 19
+}
+
+Response code: 500 (Internal Server Error); Time: 241ms; Content length: 151 bytes
+```
 
 
 
