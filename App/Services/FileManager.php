@@ -24,6 +24,8 @@ class FileManager
             move_uploaded_file(
                 $this->Files['file_image']['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . $GLOBALS['storage'] . '/' . $fileName
             );
+        } else {
+            throw new \Exception('Error uploading file, ' . $error, 500);
         }
     }
 
@@ -35,7 +37,7 @@ class FileManager
     /**
      * @throws \Exception
      */
-    public function delete(string $fileName)
+    public function delete(string|null $fileName)
     {
         if (!unlink($fileName)) {
             throw new \Exception('File not found', 500);

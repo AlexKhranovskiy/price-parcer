@@ -18,6 +18,7 @@ class File implements Repository
         $this->db = $db;
         $this->fileManager = $fileManager;
     }
+
     public function save(string $fileName)
     {
         $sql = "insert into files (name, directory, stored_at) values (
@@ -46,10 +47,14 @@ class File implements Repository
     {
         $sql = "select * from files where id=:id";
         $result = $this->db->pdo->prepare($sql);
-        $result->execute([
-            'id' => $id
-        ]);
-        return $result->fetch(Database::FETCH_ASSOC);
+        try {
+            $result->execute([
+                'id' => $id
+            ]);
+            return $result->fetch(Database::FETCH_ASSOC);
+        } catch (\Exception $exception) {
+            throw new \Exception($exception->getMessage(), 500);
+        }
     }
 
     public function findByName(string $name): array

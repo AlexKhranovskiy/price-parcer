@@ -30,11 +30,7 @@ abstract class Controller
                 'id' => $id,
                 'queryParams' => $queryParams
             ];
-            //try {
-                return call_user_func_array([$controller, $action], $params);
-            //} catch (\Exception $exception){
-                //throw new \Exception($exception->getMessage(), $exception->getCode());
-            //}
+            return call_user_func_array([$controller, $action], $params);
         } else {
             throw new \Exception('Not found', 404);
         }
