@@ -123,6 +123,23 @@ Content-Type: application/json; charset=utf-8
 
 Response code: 500 (Internal Server Error); Time: 224ms; Content length: 39 bytes
 ```
+```http request
+GET http://localhost:80/api/files
+
+HTTP/1.1 500 Internal Server Error
+Date: Fri, 28 Oct 2022 16:13:11 GMT
+Server: Apache/2.4.52 (Debian)
+X-Powered-By: PHP/8.1.2
+Content-Length: 76
+Connection: close
+Content-Type: application/json; charset=utf-8
+
+[
+  "Unable connect to the DB SQLSTATE[HY000] [1049] Unknown database 'mydb1'"
+]
+
+Response code: 500 (Internal Server Error); Time: 164ms; Content length: 76 bytes
+```
 
 
 
