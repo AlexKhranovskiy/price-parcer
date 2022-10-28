@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Resources;
-
 
 use App\Interfaces\AdditionsForFileResource;
 use ArrayObject;

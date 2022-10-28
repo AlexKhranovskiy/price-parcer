@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Services;
-
 
 class FileManager
 {
@@ -22,7 +20,8 @@ class FileManager
         $error = $this->Files['file_image']['error'];
         if ($error == UPLOAD_ERR_OK) {
             move_uploaded_file(
-                $this->Files['file_image']['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . $GLOBALS['storage'] . '/' . $fileName
+                $this->Files['file_image']['tmp_name'],
+                $_SERVER['DOCUMENT_ROOT'] . $GLOBALS['storage'] . '/' . $fileName
             );
         } else {
             throw new \Exception('Error uploading file, ' . $error, 500);

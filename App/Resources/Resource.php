@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Resources;
-
 
 use App\Interfaces\AdditionsForFileResource;
 use ArrayObject;
@@ -49,8 +47,8 @@ class Resource implements AdditionsForFileResource
 
     public function response(): bool|string
     {
-        if(empty($this->data)){
-         $this->code = 204;
+        if (empty($this->data)) {
+            $this->code = 204;
         }
         header("HTTP/1.1 " . $this->code . ' ' . $this->statuses[$this->code]);
         header('Content-Type: application/json; charset=utf-8');

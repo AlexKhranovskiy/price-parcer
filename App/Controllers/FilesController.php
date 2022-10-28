@@ -6,7 +6,6 @@ use App\models\File;
 use App\Resources\FileResource;
 use App\Resources\FileResourceWithLink;
 
-
 class FilesController extends Controller
 {
     private File $file;
@@ -14,7 +13,7 @@ class FilesController extends Controller
 
     public function __construct(File $file)
     {
-        $this->fileResourceWithLink = new FileResourceWithLink;
+        $this->fileResourceWithLink = new FileResourceWithLink();
         $this->file = $file;
     }
 
@@ -31,7 +30,8 @@ class FilesController extends Controller
     {
         $this->file->fileManager->save();
         $this->fileResourceWithLink->set(
-            $this->file->save($this->file->fileManager->getName()), 201
+            $this->file->save($this->file->fileManager->getName()),
+            201
         );
         return $this->fileResourceWithLink->response();
     }
@@ -48,7 +48,8 @@ class FilesController extends Controller
             $this->file->fileManager->delete($fileName);
             $this->file->deleteById($id);
             $this->fileResourceWithLink->set(
-                $this->file->deleteById($id), 201
+                $this->file->deleteById($id),
+                201
             );
             return $this->fileResourceWithLink->response();
         } catch (\Exception $eFileNotFound) {
@@ -62,5 +63,4 @@ class FilesController extends Controller
                 ', record was successfully deleted.', $eFileNotFound->getCode());
         }
     }
-
 }

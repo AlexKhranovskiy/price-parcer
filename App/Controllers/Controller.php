@@ -16,8 +16,7 @@ abstract class Controller
         array $queryParams,
         string|null $controller,
         File $file
-    ): array|string|null
-    {
+    ): array|string|null {
         if (!is_null($controller)) {
             $controllerName = $controller;
         } else {

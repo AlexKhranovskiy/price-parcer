@@ -67,12 +67,13 @@ class Router
         public string $resource,
         public int|null $id = null,
         public string|null $action = null,
-    )
-    {
+    ) {
         $this->queryParams = match (true) {
             !empty($_REQUEST) => $_REQUEST, // get method
-            !empty(file_get_contents("php://input")) => json_decode(file_get_contents("php://input"),
-                true),
+            !empty(file_get_contents("php://input")) => json_decode(
+                file_get_contents("php://input"),
+                true
+            ),
             default => [],
         };
         $this->queryType = $_SERVER['REQUEST_METHOD'];

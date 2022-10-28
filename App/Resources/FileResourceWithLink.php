@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Resources;
-
 
 class FileResourceWithLink extends FileResource
 {
