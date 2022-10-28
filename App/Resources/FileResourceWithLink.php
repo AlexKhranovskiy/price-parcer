@@ -16,7 +16,7 @@ class FileResourceWithLink extends FileResource
     public function additions(string $fieldName, array &$value)
     {
         $directory = explode('/', $value['directory']);
-        $value[$fieldName] = $_SERVER['HTTP_HOST'] . $GLOBALS['storage'] . '/' .
+        $value[$fieldName] = 'http://' . $_SERVER['HTTP_HOST'] . $GLOBALS['storage'] . '/' .
             end($directory);
     }
 }
