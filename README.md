@@ -46,7 +46,7 @@ Accept: application/json
 ```
 Change id to number.
 
-#### Some example
+#### Some examples
 ```http request
 GET http://localhost:80/api/files
 
@@ -95,6 +95,23 @@ Content-Type: application/json; charset=utf-8
 ]
 
 Response code: 404 (Not Found); Time: 202ms; Content length: 13 bytes
+```
+```http request
+DELETE http://localhost:80/api/files/87
+
+HTTP/1.1 500 Internal Server Error
+Date: Fri, 28 Oct 2022 16:02:40 GMT
+Server: Apache/2.4.52 (Debian)
+X-Powered-By: PHP/8.1.2
+Content-Length: 39
+Connection: close
+Content-Type: application/json; charset=utf-8
+
+[
+  "File not found, record was deleted."
+]
+
+Response code: 500 (Internal Server Error); Time: 224ms; Content length: 39 bytes
 ```
 
 
