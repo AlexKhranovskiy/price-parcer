@@ -79,26 +79,23 @@ Content-Type: application/json; charset=utf-8
 Response code: 200 (OK); Time: 309ms; Content length: 359 bytes
 ```
 ```http request
-POST http://localhost:80/api/files
+GET http://localhost:80/api/filesv
 
-HTTP/1.1 500 Internal Server Error
-Date: Fri, 28 Oct 2022 13:41:45 GMT
+HTTP/1.1 404 Not Found
+Date: Fri, 28 Oct 2022 15:14:11 GMT
 Server: Apache/2.4.52 (Debian)
 X-Powered-By: PHP/8.1.2
-Content-Length: 151
-Connection: close
+Content-Length: 13
+Keep-Alive: timeout=5, max=100
+Connection: Keep-Alive
 Content-Type: application/json; charset=utf-8
 
-{
-  "errorno": "E_WARNING",
-  "errstr": "Undefined array key &quot;file_image&quot;",
-  "errfile": "\/var\/www\/html\/App\/Services\/FileManager.php",
-  "errline": 19
-}
+[
+  "Not found"
+]
 
-Response code: 500 (Internal Server Error); Time: 241ms; Content length: 151 bytes
+Response code: 404 (Not Found); Time: 202ms; Content length: 13 bytes
 ```
-
 
 
 

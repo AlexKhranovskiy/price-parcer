@@ -23,6 +23,9 @@ class FilesController extends Controller
         return $this->fileResourceWithLink->response();
     }
 
+    /**
+     * @throws \Exception
+     */
     public function save(...$params): array|string
     {
         $this->file->fileManager->save();
@@ -32,6 +35,9 @@ class FilesController extends Controller
         return $this->fileResourceWithLink->response();
     }
 
+    /**
+     * @throws \Exception
+     */
     public function delete(...$params)
     {
         /** @var $id */

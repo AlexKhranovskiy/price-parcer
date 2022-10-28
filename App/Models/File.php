@@ -43,6 +43,9 @@ class File implements Repository
         return $result->fetchAll(Database::FETCH_ASSOC);
     }
 
+    /**
+     * @throws \Exception
+     */
     public function findById(int $id)
     {
         $sql = "select * from files where id=:id";
