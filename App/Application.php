@@ -5,9 +5,11 @@ namespace App;
 use App\Controllers\Controller;
 use App\Database\Database;
 use App\models\File;
+use App\Resources\Resource;
 use App\Router\Route;
 use App\Router\Router;
 use App\Services\FileManager;
+use Throwable;
 
 class Application
 {
@@ -31,7 +33,7 @@ class Application
                 $file
             );
         } catch (\Exception $exception) {
-            throw new \Exception($exception->getMessage());
+            throw new \Exception($exception->getMessage(), $exception->getCode());
         }
     }
 }

@@ -4,9 +4,6 @@
 namespace App\Services;
 
 
-use App\models\File;
-use mysql_xdevapi\Exception;
-
 class FileManager
 {
     private array $Files;
@@ -25,7 +22,7 @@ class FileManager
         $error = $this->Files['file_image']['error'];
         if ($error == UPLOAD_ERR_OK) {
             move_uploaded_file(
-                $this->Files['file_image']['tmp_name'],  $_SERVER['DOCUMENT_ROOT'] . $GLOBALS['storage'] . '/' .$fileName
+                $this->Files['file_image']['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . $GLOBALS['storage'] . '/' . $fileName
             );
         }
     }
@@ -35,12 +32,13 @@ class FileManager
         return $this->Files['file_image']['name'];
     }
 
+    /**
+     * @throws \Exception
+     */
     public function delete(string $fileName)
     {
-        try {
-            unlink($fileName);
-        } catch (\Exception $exception){
-            throw new Exception($exception->getMessage());
+        if (!unlink($fileName)) {
+            throw new \Exception('File not found', 500);
         }
     }
 }

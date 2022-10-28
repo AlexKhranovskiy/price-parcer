@@ -34,15 +34,19 @@ class FilesController extends Controller
 
     public function delete(...$params)
     {
-        /** @var $id */
-        extract($params);
-        $fileName = $this->file->findById($id)['directory'];
-        $this->file->fileManager->delete($fileName);
-        $this->file->deleteById($id);
-        $this->fileResourceWithLink->set(
-            $this->file->deleteById($id), 201
-        );
-        return $this->fileResourceWithLink->response();
+//        try {
+            /** @var $id */
+            extract($params);
+            $fileName = $this->file->findById($id)['directory'];
+            $this->file->fileManager->delete($fileName);
+            $this->file->deleteById($id);
+            $this->fileResourceWithLink->set(
+                $this->file->deleteById($id), 201
+            );
+            return $this->fileResourceWithLink->response();
+//        } catch (\Exception $exception) {
+//            throw new \Exception($exception->getMessage(), $exception->getCode());
+//        }
     }
 
 }
