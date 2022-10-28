@@ -4,9 +4,19 @@ without the framework
 Praction with REST API and file storing on server side using PHP. Praction with MVC, SOLID.
 #### Description
 Application uses Repository design pattern. Application has REST API, receives file with using HTTP method POST, 
-encodes file name, stores in folder 'Files', is able to output all stored files' information in JSON format, is 
-able to delete info about file and file themself by inputted id. All are stored files' names are encoded in uniquals
-names.
+encodes file name, stores in folder 'Files', is able to output all stored files' information and errors in JSON
+format, is able to delete info about file and file themself by inputted id. All are stored files' names are 
+encoded in uniquals names.
+
+Application handles exceptions in cases:
+* Wrong URI
+* Can not connect to DB
+* Can not delete file
+
+Application has config for:
+* DB
+* Storing directory
+* Routes
 #### How to run
 * Clone the repository 
 * Create file (in root dir of project) .env and copy data from .env.example in it
