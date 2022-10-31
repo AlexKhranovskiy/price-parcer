@@ -141,6 +141,10 @@ Content-Type: application/json; charset=utf-8
 
 Response code: 500 (Internal Server Error); Time: 164ms; Content length: 76 bytes
 ```
+```http request
+C:\Users\Alexander>curl -X POST -H "Content-Type: multipart/form-data" -H "Accept: application/json" -F "file_image=@1.jpg" http://localhost:80/api/files
+["Error uploading file, 1"]
+```
 
 
 
