@@ -12,6 +12,7 @@ Application handles exceptions in cases:
 * Wrong URI
 * Can not connect to DB
 * Can not delete file
+* Can not upload large file
 
 Application has config for:
 * DB
