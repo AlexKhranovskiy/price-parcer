@@ -2,7 +2,6 @@
 
 namespace App\Resources;
 
-use App\Interfaces\AdditionsForFileResource;
 use ArrayObject;
 
 class Resource implements ResourceInterface
