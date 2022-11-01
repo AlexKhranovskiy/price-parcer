@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-use App\models\File;
+use App\Models\File;
 
 abstract class Controller
 {

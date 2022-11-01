@@ -2,9 +2,6 @@
 
 namespace App\Resources;
 
-use App\Interfaces\AdditionsForFileResource;
-use ArrayObject;
-
 class FileResource extends Resource
 {
     public int $id = 0;

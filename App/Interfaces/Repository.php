@@ -2,8 +2,6 @@
 
 namespace App\Interfaces;
 
-use App\models\File;
-
 interface Repository
 {
     public function save(string $fileName);
