@@ -11,6 +11,4 @@ interface ResourceInterface extends AdditionsForFileResource
     public function set(array|null $data, int $code);
 
     public function response(): bool|string;
-
-    public function additions(string $fieldName, array &$value);
 }

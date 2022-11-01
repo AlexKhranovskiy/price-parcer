@@ -3,13 +3,11 @@
 namespace App\Controllers;
 
 use App\Models\File;
-use App\Resources\FileResourceWithLink;
 use App\Resources\ResourceInterface;
 
 class FilesController extends Controller
 {
     private File $file;
-    private FileResourceWithLink $fileResourceWithLink;
     private ResourceInterface $resource;
 
     public function __construct(File $file, ResourceInterface $resource)
