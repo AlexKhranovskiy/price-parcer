@@ -2,9 +2,9 @@
 
 namespace App\Router;
 
-class Route
+class RouteBuilder
 {
-    private static ?Route $instance = null;
+    private static ?RouteBuilder $instance = null;
     private static $GET = [];
     private static $POST = [];
     private static $PATCH = [];
@@ -58,7 +58,7 @@ class Route
         }
     }
 
-    public static function take(): ?Route
+    public static function take(): ?RouteBuilder
     {
         return self::$instance;
     }

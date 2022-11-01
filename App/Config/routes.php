@@ -2,8 +2,8 @@
 
 namespace App\Config;
 
-use App\Router\Route;
+use App\Router\RouteBuilder;
 
-Route::get('files', null, 'all');
-Route::post('files', null, 'save');
-Route::delete('files', null, 'delete');
+RouteBuilder::get('files', null, 'all');
+RouteBuilder::post('files', null, 'save');
+RouteBuilder::delete('files', null, 'delete');
