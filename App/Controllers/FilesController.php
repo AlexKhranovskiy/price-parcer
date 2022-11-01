@@ -4,22 +4,24 @@ namespace App\Controllers;
 
 use App\Models\File;
 use App\Resources\FileResourceWithLink;
+use App\Resources\ResourceInterface;
 
 class FilesController extends Controller
 {
     private File $file;
     private FileResourceWithLink $fileResourceWithLink;
+    private ResourceInterface $resource;
 
-    public function __construct(File $file)
+    public function __construct(File $file, ResourceInterface $resource)
     {
-        $this->fileResourceWithLink = new FileResourceWithLink();
+        $this->resource = $resource;
         $this->file = $file;
     }
 
     public function all(...$params): array|string
     {
-        $this->fileResourceWithLink->set($this->file->getAll(), 200);
-        return $this->fileResourceWithLink->response();
+        $this->resource->set($this->file->getAll(), 200);
+        return $this->resource->response();
     }
 
     /**
@@ -28,11 +30,11 @@ class FilesController extends Controller
     public function save(...$params): array|string
     {
         $this->file->fileManager->save();
-        $this->fileResourceWithLink->set(
+        $this->resource->set(
             $this->file->save($this->file->fileManager->getName()),
             201
         );
-        return $this->fileResourceWithLink->response();
+        return $this->resource->response();
     }
 
     /**
@@ -46,11 +48,11 @@ class FilesController extends Controller
             $fileName = $this->file->findById($id)['directory'];
             $this->file->fileManager->delete($fileName);
             $this->file->deleteById($id);
-            $this->fileResourceWithLink->set(
+            $this->resource->set(
                 $this->file->deleteById($id),
                 201
             );
-            return $this->fileResourceWithLink->response();
+            return $this->resource->response();
         } catch (\Exception $eFileNotFound) {
             try {
                 $this->file->deleteById($id);

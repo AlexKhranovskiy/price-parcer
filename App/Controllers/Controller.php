@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\File;
+use App\Resources\FileResourceWithLink;
 
 abstract class Controller
 {
@@ -24,7 +25,7 @@ abstract class Controller
         }
         $controllerClass = __NAMESPACE__ . '\\' . ucfirst($controllerName);
         if (class_exists($controllerClass)) {
-            $controller = new $controllerClass($file);
+            $controller = new $controllerClass($file, new FileResourceWithLink());
             $params = (is_null($id) && !empty($queryParams)) ? $queryParams : [
                 'id' => $id,
                 'queryParams' => $queryParams

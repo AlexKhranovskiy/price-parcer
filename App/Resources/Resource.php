@@ -5,7 +5,7 @@ namespace App\Resources;
 use App\Interfaces\AdditionsForFileResource;
 use ArrayObject;
 
-class Resource implements AdditionsForFileResource
+class Resource implements ResourceInterface
 {
     protected array $statuses = [
         200 => 'OK',
