@@ -2,8 +2,10 @@
 
 namespace App\Controllers;
 
-use App\Models\File;
+use App\Database\Database;
+use App\Models\Model;
 use App\Resources\FileResourceWithLink;
+use App\Resources\SubscribesResource;
 
 abstract class Controller
 {
@@ -16,7 +18,7 @@ abstract class Controller
         string|null $action,
         array $queryParams,
         string|null $controller,
-        File $file
+        Database $db
     ): array|string|null {
         if (!is_null($controller)) {
             $controllerName = $controller;
@@ -25,7 +27,7 @@ abstract class Controller
         }
         $controllerClass = __NAMESPACE__ . '\\' . ucfirst($controllerName);
         if (class_exists($controllerClass)) {
-            $controller = new $controllerClass($file, new FileResourceWithLink());
+            $controller = new $controllerClass($db);
             $params = (is_null($id) && !empty($queryParams)) ? $queryParams : [
                 'id' => $id,
                 'queryParams' => $queryParams

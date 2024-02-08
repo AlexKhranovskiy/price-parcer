@@ -5,6 +5,7 @@ namespace App;
 use App\Controllers\Controller;
 use App\Database\Database;
 use App\models\File;
+use App\Models\Model;
 use App\Router\RouteBuilder;
 use App\Router\Router;
 use App\Services\FileManager;
@@ -21,14 +22,14 @@ class Application
         $db = new Database($connection);
         $router = Router::run($uri);
         RouteBuilder::take()->run($router);
-        $file = new File($db, $storage, new FileManager($_FILES));
+        //$file = new File($db, $storage, new FileManager($_FILES));
         $this->controllerActionResult = Controller::run(
             $router->resource,
             $router->id,
             $router->controllerAction,
             $router->queryParams,
             $router->controller,
-            $file
+            $db
         );
     }
 }

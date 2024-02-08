@@ -7,7 +7,7 @@ $connection = [
     'host' => 'mysql',
     'userName' => 'root',
     'password' => 'secret',
-    'database' => 'mydb',
+    'database' => 'price-parcer-db',
     'port' => '3306',
     'charset' => 'utf8'
 ];

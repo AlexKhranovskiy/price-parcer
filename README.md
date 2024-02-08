@@ -22,17 +22,27 @@ Application has config for:
 * Clone the repository 
 * Create file (in root dir of project) .env and copy data from .env.example in it
 * ```docker-compose up -d```
-* ```docker exec -it 60_mysql_1 /bin/sh```
+* ```docker exec -it price-parcer_mysql_1 /bin/sh```
 * ```mysql -u root -p ``` password is: secret
-* ```use mydb;```
+* ```use price-parcer-db;```
 * Run SQL queries:
 ```sql
-create table files(
+create table users(
     id int not null auto_increment,
-    name varchar(255) not null,
-    directory varchar(255) not null,
-    stored_at datetime,
+    email varchar(255) not null,
     primary key (id)
+) default character set utf8;
+
+```
+```sql
+create table subscriptions(
+    id int not null auto_increment,
+    url varchar(255) not null,
+    price varchar(255) null,
+    currencyCode varchar(255) null,
+    user_id int,
+    PRIMARY KEY(id),
+    FOREIGN KEY (user_id) references users(id)
 ) default character set utf8;
 
 ```
