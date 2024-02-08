@@ -31,16 +31,41 @@ class User extends Model
         }
     }
 
-    public function AddNew(string $email): static
+    public function getByEmail(string $email)
     {
-        $sql = "insert into users (email) values (
-                    :email      
-                   )";
+        $sql = "select * from users where email=:email";
+        $result = $this->db->pdo->prepare($sql);
+        $result->execute([
+            'email' => $email
+        ]);
+        $result = $result->fetch(Database::FETCH_ASSOC);
+        if(isset($result['id'])) {
+            $this->id = $result['id'];
+            $this->email = $result['email'];
+            return $this;
+        } else {
+            return null;
+        }
+    }
+
+    public function addNew(string $email): static
+    {
+        $sql = "insert into users (email) values (:email)";
         $result = $this->db->pdo->prepare($sql);
         $result->bindParam(':email', $email);
         $result->execute();
         $this->id = $this->db->pdo->lastInsertId();
         $this->email = $email;
         return $this;
+    }
+
+    public function findOrAddNew(string $email)
+    {
+        $user = $this->getByEmail($email);
+        if(!is_null($user)){
+            return $user;
+        } else {
+            return $this->addNew($email);
+        }
     }
 }

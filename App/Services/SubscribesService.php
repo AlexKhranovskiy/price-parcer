@@ -22,7 +22,7 @@ class SubscribesService
         $priceAndCurrency = $source->getPriceAndCurrencyCode();
 
         $user = new User($this->database);
-        $user = $user->AddNew($email);
+        $user = $user->findOrAddNew($email);
 
         $subscription = new Subscription($this->database, $user);
         $subscription = $subscription->addNew($url);
