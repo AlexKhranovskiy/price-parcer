@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Database\Database;
 
-class Subscription extends Model
+class Subscription
 {
     protected Database $db;
     protected User $user;
@@ -29,24 +29,10 @@ class Subscription extends Model
         return $this;
     }
 
-//    public function attachToUser(User $user)
-//    {
-//        if (is_null($this->id)) {
-//            throw new \Exception('Subscription model is empty.');
-//        } else {
-//            $sql = "update subscriptions set user_id=:user_id where id=:id";
-//            $result = $this->db->pdo->prepare($sql);
-//            $result->bindParam(':user_id', $user->id);
-//            $result->bindParam(':id', $this->id);
-//            $result->execute();
-//            return $this;
-//        }
-//    }
-
     public function setPriceAndCurrencyCode(string $price, string $currencyCode)
     {
         if (is_null($this->id)) {
-            throw new \Exception('Subscription model is empty.');
+            throw new \Exception('Subscription model is empty.', 500);
         } else {
             $sql = "update subscriptions set price=:price, currencyCode=:currencyCode where id=:id";
             $result = $this->db->pdo->prepare($sql);
@@ -121,8 +107,8 @@ class Subscription extends Model
     {
         $rows = [];
         $sql = "select subscriptions.id,subscriptions.url, subscriptions.price, users.email from subscriptions
-                                               join users_subscriptions on subscriptions.id = users_subscriptions.subscription_id
-                                               join users on users_subscriptions.user_id = users.id";
+                join users_subscriptions on subscriptions.id = users_subscriptions.subscription_id
+                join users on users_subscriptions.user_id = users.id";
         $result = $this->db->pdo->prepare($sql);
         $result->execute();
         $emails = [];

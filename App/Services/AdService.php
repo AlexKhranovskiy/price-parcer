@@ -9,7 +9,7 @@ class AdService
     {
         $this->source = file_get_contents($url);
         if($this->source === false){
-            throw new \Exception('Valid response from remote service has not been got.');
+            throw new \Exception('Valid response from remote service has not been got.', 409);
         }
         return $this;
     }
@@ -20,7 +20,7 @@ class AdService
         if(sizeof($out) > 0){
             return ['price' => $out[1], 'currencyCode' => $out[2]];
         } else {
-            throw new \Exception('Failed getting price and currency code from remote service.');
+            throw new \Exception('Failed getting price and currency code from remote service.', 409);
         }
     }
 

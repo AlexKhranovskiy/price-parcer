@@ -3,9 +3,8 @@
 namespace App\Models;
 
 use App\Database\Database;
-use App\Services\FileManager;
 
-class User extends Model
+class User
 {
     protected Database $db;
 
@@ -72,7 +71,7 @@ class User extends Model
 
     public function attachToSubscription(Subscription $subscription) {
         if (is_null($subscription->id)) {
-            throw new \Exception('Subscription model is empty.');
+            throw new \Exception('Subscription model is empty.', 500);
         } else {
             $sql = "insert into users_subscriptions (user_id, subscription_id) values (:user_id, :subscription_id)";
             $result = $this->db->pdo->prepare($sql);
@@ -101,25 +100,4 @@ class User extends Model
             return false;
         }
     }
-
-//    public function getAllWithSubscriptions(): ?array
-//    {
-//        $rows = [];
-//        $sql = "select * from users join subscriptions where users.id=subscriptions.user_id";
-//        $result = $this->db->pdo->prepare($sql);
-//        $result->execute();
-//        while(true){
-//            $row = $result->fetch(Database::FETCH_ASSOC);
-//            if($row) {
-//                $rows[] = $row;
-//            } else {
-//                break;
-//            }
-//        }
-//        if(sizeof($rows) > 0) {
-//            return $rows;
-//        } else {
-//            return null;
-//        }
-//    }
 }

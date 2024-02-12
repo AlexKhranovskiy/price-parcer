@@ -7,15 +7,17 @@ require_once(__DIR__ . '/App/Config/storage.php');
 error_reporting(0);
 
 use App\Application;
-use App\Resources\Resource;
+use App\Resources\SubscribesResource;
 
 /** @var $connection */
 
 function exception_handler(Throwable $exception)
 {
-    $resource = new Resource;
-    $resource->set([$exception->getMessage()], $exception->getCode());
-    echo $resource->response();
+    $resource = new SubscribesResource;
+    echo $resource->response([
+        'success' => false,
+        'message' => $exception->getMessage()
+    ], $exception->getCode());
 }
 
 set_exception_handler('exception_handler');

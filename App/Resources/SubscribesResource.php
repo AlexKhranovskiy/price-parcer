@@ -2,7 +2,7 @@
 
 namespace App\Resources;
 
-class SubscribesResource extends Resource1
+class SubscribesResource extends Resource
 {
 
 }

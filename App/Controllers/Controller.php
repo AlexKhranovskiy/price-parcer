@@ -3,9 +3,6 @@
 namespace App\Controllers;
 
 use App\Database\Database;
-use App\Models\Model;
-use App\Resources\FileResourceWithLink;
-use App\Resources\SubscribesResource;
 
 abstract class Controller
 {
