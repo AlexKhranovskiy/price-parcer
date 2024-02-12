@@ -3,10 +3,7 @@ without the framework
 #### Vocation
 Praction with REST API and file storing on server side using PHP. Praction with MVC, SOLID.
 #### Description
-Application uses Repository design pattern. Application has REST API, receives file with using HTTP method POST, 
-encodes file name, stores in folder 'Files', is able to output all stored files' information and errors in JSON
-format, is able to delete info about file and file themself by inputted id. All are stored files' names are 
-encoded in uniquals names.
+
 
 Application handles exceptions in cases:
 * Wrong URI
@@ -25,7 +22,7 @@ Application has config for:
 * ```docker exec -it price-parcer_mysql_1 /bin/sh```
 * ```mysql -u root -p ``` password is: secret
 * ```use price-parcer-db;```
-* Run SQL queries:
+* Run SQL quceries:
 ```sql
 create table users(
     id int not null auto_increment,
@@ -40,9 +37,18 @@ create table subscriptions(
     url varchar(255) not null,
     price varchar(255) null,
     currencyCode varchar(255) null,
+    PRIMARY KEY(id)
+) default character set utf8;
+
+```
+```sql
+create table users_subscriptions(
+    id int not null auto_increment,
     user_id int,
-    PRIMARY KEY(id),
-    FOREIGN KEY (user_id) references users(id)
+    FOREIGN KEY (user_id) references users(id),
+    subscription_id int,
+    FOREIGN KEY (subscription_id) references subscriptions(id),
+    primary key (id)
 ) default character set utf8;
 
 ```

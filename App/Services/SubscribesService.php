@@ -25,8 +25,15 @@ class SubscribesService
         $user = $user->findOrAddNew($email);
 
         $subscription = new Subscription($this->database, $user);
-        $subscription = $subscription->addNew($url);
-        $subscription = $subscription->attachToUser($user);
+        $result = $subscription->getByUrl($url, $subscription);
+        
+        if(is_null($result)){
+            $subscription = $subscription->addNew($url);
+        }
+
+        if(!$user->hasAttachedSubscription($subscription)) {
+            $user = $user->attachToSubscription($subscription);
+        }
         $subscription->setPriceAndCurrencyCode($priceAndCurrency['price'], $priceAndCurrency['currencyCode']);
     }
 }

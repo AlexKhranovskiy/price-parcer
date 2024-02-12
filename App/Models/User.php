@@ -31,7 +31,7 @@ class User extends Model
         }
     }
 
-    public function getByEmail(string $email)
+    public function getByEmail(string $email, ?User &$user = null)
     {
         $sql = "select * from users where email=:email";
         $result = $this->db->pdo->prepare($sql);
@@ -44,6 +44,7 @@ class User extends Model
             $this->email = $result['email'];
             return $this;
         } else {
+            $user = $this;
             return null;
         }
     }
@@ -68,4 +69,57 @@ class User extends Model
             return $this->addNew($email);
         }
     }
+
+    public function attachToSubscription(Subscription $subscription) {
+        if (is_null($subscription->id)) {
+            throw new \Exception('Subscription model is empty.');
+        } else {
+            $sql = "insert into users_subscriptions (user_id, subscription_id) values (:user_id, :subscription_id)";
+            $result = $this->db->pdo->prepare($sql);
+            $result->bindParam(':user_id', $this->id);
+            $result->bindParam(':subscription_id', $subscription->id);
+            $result->execute();
+            return $this;
+        }
+    }
+
+    public function hasAttachedSubscription(Subscription $subscription)
+    {
+        $sql = "select * from users join users_subscriptions join subscriptions
+                where users.id=users_subscriptions.user_id
+                  and users_subscriptions.subscription_id=subscriptions.id
+                  and subscriptions.id=:id_subscription
+                  and users.id=:id_user";
+        $result = $this->db->pdo->prepare($sql);
+        $result->execute([
+            'id_subscription' => $subscription->id,
+            'id_user' => $this->id
+        ]);
+        if($result->fetch(Database::FETCH_ASSOC)){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+//    public function getAllWithSubscriptions(): ?array
+//    {
+//        $rows = [];
+//        $sql = "select * from users join subscriptions where users.id=subscriptions.user_id";
+//        $result = $this->db->pdo->prepare($sql);
+//        $result->execute();
+//        while(true){
+//            $row = $result->fetch(Database::FETCH_ASSOC);
+//            if($row) {
+//                $rows[] = $row;
+//            } else {
+//                break;
+//            }
+//        }
+//        if(sizeof($rows) > 0) {
+//            return $rows;
+//        } else {
+//            return null;
+//        }
+//    }
 }
