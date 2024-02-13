@@ -2,4 +2,3 @@ vendor
 .idea
 .env
 .docker/mysql
-App/Config/database.php
