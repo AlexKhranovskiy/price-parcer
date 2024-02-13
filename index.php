@@ -2,7 +2,6 @@
 require_once(__DIR__ . '/vendor/autoload.php');
 require_once(__DIR__ . '/App/Config/database.php');
 require_once(__DIR__ . '/App/Config/routes.php');
-require_once(__DIR__ . '/App/Config/storage.php');
 
 error_reporting(0);
 
@@ -22,5 +21,5 @@ function exception_handler(Throwable $exception)
 
 set_exception_handler('exception_handler');
 
-$obj = new Application($connection, $GLOBALS['storage'], $_SERVER['REQUEST_URI']);
+$obj = new Application($connection, $_SERVER['REQUEST_URI']);
 echo $obj->controllerActionResult;

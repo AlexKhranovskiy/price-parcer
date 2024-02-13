@@ -14,7 +14,7 @@ class Application
     /**
      * @throws \Exception
      */
-    public function __construct(array $connection, string $storage, string $uri)
+    public function __construct(array $connection, string $uri)
     {
         $db = new Database($connection);
         $router = Router::run($uri);
