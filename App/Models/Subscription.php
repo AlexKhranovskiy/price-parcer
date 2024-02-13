@@ -16,11 +16,9 @@ class Subscription
 
     }
 
-    public function addNew(string $url)
+    public function addNew(string $url): static
     {
-        $sql = "insert into subscriptions (url) values (
-                    :url     
-                   )";
+        $sql = "insert into subscriptions (url) values (:url)";
         $result = $this->db->pdo->prepare($sql);
         $result->bindParam(':url', $url);
         $result->execute();
@@ -29,7 +27,10 @@ class Subscription
         return $this;
     }
 
-    public function setPriceAndCurrencyCode(string $price, string $currencyCode)
+    /**
+     * @throws \Exception
+     */
+    public function setPriceAndCurrencyCode(string $price, string $currencyCode): static
     {
         if (is_null($this->id)) {
             throw new \Exception('Subscription model is empty.', 500);
@@ -46,7 +47,7 @@ class Subscription
         }
     }
 
-    public function getByUrl($url, ?Subscription &$subscription = null)
+    public function getByUrl($url, ?Subscription &$subscription = null): ?static
     {
         $sql = "select * from subscriptions where url=:url";
         $result = $this->db->pdo->prepare($sql);
@@ -65,7 +66,7 @@ class Subscription
 
     }
 
-    public function findOrAddNew($url)
+    public function findOrAddNew($url): Subscription|static
     {
         $subscription = $this->getByUrl($url);
         if (!is_null($subscription)) {
@@ -75,7 +76,7 @@ class Subscription
         }
     }
 
-    public function hasAttachedUser(User $user)
+    public function hasAttachedUser(User $user): bool
     {
         $sql = "select * from subscriptions join users_subscriptions join users
                 where users_subscriptions.subscription_id=subscriptions.id
@@ -103,7 +104,7 @@ class Subscription
 
     }
 
-    public function getAllWithUsers()
+    public function getAllWithUsers(): ?array
     {
         $rows = [];
         $sql = "select subscriptions.id,subscriptions.url, subscriptions.price, users.email from subscriptions

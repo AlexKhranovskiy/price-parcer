@@ -10,7 +10,7 @@ use App\Resources\SubscribesResource;
 
 /** @var $connection */
 
-function exception_handler(Throwable $exception)
+function exception_handler(Throwable $exception): void
 {
     $resource = new SubscribesResource;
     echo $resource->response([

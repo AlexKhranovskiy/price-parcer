@@ -30,7 +30,7 @@ class User
         }
     }
 
-    public function getByEmail(string $email, ?User &$user = null)
+    public function getByEmail(string $email, ?User &$user = null): ?static
     {
         $sql = "select * from users where email=:email";
         $result = $this->db->pdo->prepare($sql);
@@ -59,7 +59,7 @@ class User
         return $this;
     }
 
-    public function findOrAddNew(string $email)
+    public function findOrAddNew(string $email): User|static
     {
         $user = $this->getByEmail($email);
         if(!is_null($user)){
@@ -69,7 +69,8 @@ class User
         }
     }
 
-    public function attachToSubscription(Subscription $subscription) {
+    public function attachToSubscription(Subscription $subscription): static
+    {
         if (is_null($subscription->id)) {
             throw new \Exception('Subscription model is empty.', 500);
         } else {
@@ -82,7 +83,7 @@ class User
         }
     }
 
-    public function hasAttachedSubscription(Subscription $subscription)
+    public function hasAttachedSubscription(Subscription $subscription): bool
     {
         $sql = "select * from users join users_subscriptions join subscriptions
                 where users.id=users_subscriptions.user_id

@@ -6,13 +6,14 @@ use App\Controllers\Controller;
 use App\Database\Database;
 use App\Router\RouteBuilder;
 use App\Router\Router;
+use Exception;
 
 class Application
 {
     public array|string|null $controllerActionResult;
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function __construct(array $connection, string $uri)
     {

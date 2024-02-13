@@ -5,17 +5,18 @@ namespace App\Router;
 class RouteBuilder
 {
     private static ?RouteBuilder $instance = null;
-    private static $GET = [];
-    private static $POST = [];
-    private static $PATCH = [];
-    private static $DELETE = [];
+    private static array $GET = [];
+    private static array $POST = [];
+    private static array $PATCH = [];
+    private static array $DELETE = [];
 
     public static function get(
         string $resource,
         string|null $action,
         string|null $controllerAction,
         string|null $controller = null
-    ) {
+    ): void
+    {
         self::$GET[] = [$resource, $action, $controllerAction, $controller];
         if (is_null(self::$instance)) {
             new self();
@@ -27,7 +28,8 @@ class RouteBuilder
         string|null $action,
         string|null $controllerAction,
         string|null $controller = null
-    ) {
+    ): void
+    {
         self::$POST[] = [$resource, $action, $controllerAction, $controller];
         if (is_null(self::$instance)) {
             new self();
@@ -39,7 +41,8 @@ class RouteBuilder
         string|null $action,
         string|null $controllerAction,
         string|null $controller = null
-    ) {
+    ): void
+    {
         self::$PATCH[] = [$resource, $action, $controllerAction, $controller];
         if (is_null(self::$instance)) {
             new self();
@@ -51,7 +54,8 @@ class RouteBuilder
         string|null $action,
         string|null $controllerAction,
         string|null $controller = null
-    ) {
+    ): void
+    {
         self::$DELETE[] = [$resource, $action, $controllerAction, $controller];
         if (is_null(self::$instance)) {
             new self();
