@@ -8,7 +8,7 @@ class MailService
     {
         $subject = 'Ad event';
         $message = 'The price of the ad ' . $adUrl . ' has changed from ' . $oldPrice . ' ' . $currencyCode . ' to ' .
-            $newPrice . ' ' .$currencyCode;
+            $newPrice . ' ' . $currencyCode;
         $headers = 'From: Price-watcher service <alex_khranovskiy@ukr.net>' . "\r\n" .
             'Reply-To: alex_khranovkiy@ukr.net' . "\r\n" .
             'MIME-Version: 1.0' . "\r\n" .
