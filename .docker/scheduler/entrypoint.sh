@@ -5,5 +5,5 @@ cd /var/www/html
 while [ true ]
 do
   php handle_ads.php
-  sleep 60 #1 hour
+  sleep 3600 #1 hour
 done

@@ -23,12 +23,15 @@ $subscriptions = $subscription->getAllWithUsers();
 
 $adService = new AdService();
 $mailService = new MailService($mailParams);
-foreach ($subscriptions as $key => $subscription) {
-    $result = $adService->getSource($subscription['url'])->getPriceAndCurrencyCode();
-    if ($result['price'] != $subscription['price']) {
-        foreach (current($subscription['email']) as $email) {
-            $mailService($email, $result['price'], $subscription['price'], $result['currencyCode'], $subscription['url']);
-            echo 'Mail to: ' . $email . ' has sent' . PHP_EOL;
+
+if(!is_null($subscriptions)) {
+    foreach ($subscriptions as $key => $subscription) {
+        $result = $adService->getSource($subscription['url'])->getPriceAndCurrencyCode();
+        if ($result['price'] != $subscription['price']) {
+            foreach (current($subscription['email']) as $email) {
+                $mailService($email, $result['price'], $subscription['price'], $result['currencyCode'], $subscription['url']);
+                echo 'Mail to: ' . $email . ' has sent' . PHP_EOL;
+            }
         }
     }
 }
